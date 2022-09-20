@@ -2,6 +2,7 @@ use nom::alt;
 use nom::char;
 use nom::character::streaming::digit1;
 use nom::do_parse;
+use nom::error::{Error, ErrorKind};
 use nom::named;
 use nom::opt;
 use nom::tag;
@@ -20,12 +21,13 @@ use super::{
 
 fn parse_u8(input: &[u8]) -> IResult<&[u8], u8> {
     let (input, digits) = digit1(input)?;
-    IResult::Ok((input, atoi_u8(digits).unwrap()))
+    let num = atoi_u8(digits).ok_or(nom::Err::Failure(Error::new(input, ErrorKind::Digit)))?;
+    IResult::Ok((input, num))
 }
 
 fn parse_usize(input: &[u8]) -> IResult<&[u8], usize> {
     let (input, digits) = digit1(input)?;
-    let num = atoi_usize(digits).unwrap();
+    let num = atoi_usize(digits).ok_or(nom::Err::Failure(Error::new(input, ErrorKind::Digit)))?;
     IResult::Ok((input, num))
 }
 

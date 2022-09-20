@@ -8,6 +8,9 @@ mod num;
 mod parser;
 mod protocol;
 
+#[cfg(fuzzing)]
+pub use parser::parse;
+
 use crate::traits::wifi::{Join, JoinError, WifiSupplicant};
 use atomic_polyfill::{AtomicBool, Ordering};
 use buffer::Buffer;

@@ -19,11 +19,11 @@ pub(crate) fn atoi_u8(digits: &[u8]) -> Option<u8> {
     let len = digits.len();
     for (i, digit) in digits.iter().enumerate() {
         let digit = ascii_to_digit(*digit)?;
-        let mut exp = 1;
+        let mut exp: u8 = 1;
         for _ in 0..(len - i - 1) {
-            exp *= 10;
+            exp = exp.checked_mul(10)?;
         }
-        num += exp * digit;
+        num = num.checked_add(exp.checked_mul(digit)?)?;
     }
     Some(num)
 }
@@ -33,11 +33,11 @@ pub(crate) fn atoi_usize(digits: &[u8]) -> Option<usize> {
     let len = digits.len();
     for (i, digit) in digits.iter().enumerate() {
         let digit = ascii_to_digit(*digit)? as usize;
-        let mut exp = 1;
+        let mut exp: usize = 1;
         for _ in 0..(len - i - 1) {
-            exp *= 10;
+            exp = exp.checked_mul(10)?;
         }
-        num += exp * digit;
+        num = num.checked_add(exp.checked_mul(digit)?)?;
     }
     Some(num)
 }

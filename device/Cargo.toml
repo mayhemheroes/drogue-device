@@ -54,7 +54,7 @@ cortex-m = { version = "0.7" }
 # Utilities
 futures = { version = "0.3", default-features = false }
 futures-intrusive = { version = "0.4", default-features = false }
-heapless = { version = "0.7", features = ["defmt-impl"] }
+heapless = { version = "0.7" }
 embedded-hal = { version = "0.2", features = ["unproven"] }
 embedded-hal-1 = { package = "embedded-hal", version = "1.0.0-alpha.8"}
 embedded-hal-async = { version = "0.1.0-alpha.1" }
@@ -109,6 +109,7 @@ defmt = [
     "dep:defmt",
     "embassy/defmt",
     "embedded-tls/defmt",
+    "heapless/defmt-impl",
 ]
 std = ["embassy/std", "embassy/time", "ector/std", "embedded-io/std", "serde_cbor/std"]
 "lora+rak811" = ["nom", "moveslice"]
