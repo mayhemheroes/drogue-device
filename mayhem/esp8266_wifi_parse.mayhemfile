@@ -1,0 +1,7 @@
+project: drogue-device
+target: esp8266-wifi-parse
+
+cmds:
+  - cmd: /esp8266_wifi_parse
+  - cmd: /esp8266_wifi_parse_no_inst @@
+    libfuzzer: false

@@ -1,0 +1,35 @@
+[package]
+name = "drogue-device-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2018"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+
+[dependencies.drogue-device]
+path = ".."
+default-features = false
+features = ["wifi+esp8266", "std"]
+
+[patch.crates-io]
+embassy = { git = "https://github.com/embassy-rs/embassy.git", rev = "6baddaf53982b75149cb7e91280c571f7fe2e7bc" }
+embassy-embedded-hal = { git = "https://github.com/embassy-rs/embassy.git", rev = "6baddaf53982b75149cb7e91280c571f7fe2e7bc" }
+embassy-hal-common = { git = "https://github.com/embassy-rs/embassy.git", rev = "6baddaf53982b75149cb7e91280c571f7fe2e7bc" }
+ector = { git = "https://github.com/drogue-iot/ector.git", rev = "63c08489da17ff92c493f21411411ce5ddd6154a" }
+
+# Prevent this from interfering with workspaces
+[workspace]
+members = ["."]
+
+[profile.release]
+debug = 1
+
+[[bin]]
+name = "esp8266_wifi_parse"
+path = "fuzz_targets/esp8266_wifi_parse.rs"
+test = false
+doc = false
